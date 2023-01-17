@@ -12,6 +12,7 @@ ${sub}.T1.nii
 
 Output file:
 ${sub}.T1.nii - overwrites naming of original file
+
 '
 
 #define data directory
