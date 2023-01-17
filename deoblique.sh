@@ -32,8 +32,10 @@ do
 	#create raw data backup
 	echo "creating raw data backup"
 	backup_dir=${data_dir}/${sub}/raw
-	mkdir -p ${backup_dir}
-	cp ${data_dir}/${sub}/${sub}.*.nii ${backup_dir}/
+	if [ ! -d ${backup_dir}]; then
+		mkdir -p ${backup_dir}
+		cp ${data_dir}/${sub}/${sub}.*.nii ${backup_dir}/
+	fi
 
 	# Check for input image in subj directory
 	if [ -e ${infile} ]; then
