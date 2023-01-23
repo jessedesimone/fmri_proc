@@ -1,33 +1,14 @@
 #!/bin/bash
-
-#check dependencies
-: 'uncomment if you need to check dependencies
-code should run fine on current LRN systems'
-source s0_dependencies.sh
-
-top=/media/mcuser/Data2/desimone      #parent directory
-proj_dir=${top}/ab4240_imaging/resting_state      #project directory
-data_dir=${proj_dir}/raw_data       #raw data directory
-out_dir=${proj_dir}/data_preproc; mkdir -p ${out_dir}     #output directory
-
-sub_list=`cat ${proj_dir}/id_lists/test`      #subject list
-for sub in ${sub_list[@]}
-do
-    if  [ ! -d ${out_dir}/${sub} ]; then
-        mkdir ${out_dir}/${sub}
-    fi
-
-    gen_error_msg="\
-    Driver script to run modules to prepare for afni_preproc package
-    Options to run deoblique and skullstrip separately or in parallel
-    If running skullstrip only, the anatomical images must be put into the output directory specified by deoblique.sh
+gen_error_msg="\
+    Driver to run modules to prepare for afni_preproc package
+    Outfile for [-d] is a dependency for [-s]
 
     Usage: ./stage0_deoblique.sh [-h] [-d] [-s] [-o]
     Arguments
     -h  help
     -d  deoblique
     -s  skullstrip
-    -o  overwrite existing output files
+    -o  overwrite 
     "
     while getopts ":hdso" opt; do
         case ${opt} in
@@ -52,19 +33,40 @@ do
     done
     shift $((OPTIND -1))
 
+#set directories
+: 'call directories.sh'
+source s0_config_directories.sh
+
+#set datetime
+dt=$(date "+%Y.%m.%d.%H.%M.%S")
+
+#create job file
+job_file=${job_dir}/${dt}_s0.txt
+touch ${job_file}
+echo "$dt" 2>&1 | tee ${job_file}
+
+#check dependencies
+: 'uncomment if you need to check dependencies
+code should run fine on current LRN systems'
+source s0_dependencies.sh 2>&1 | tee -a ${job_file}
+
+sub_list=`cat ${proj_dir}/id_lists/id_sub_quest_mci_only`
+for sub in ${sub_list[@]}; do mkdir -p ${out_dir}/${sub}; done
+for sub in ${sub_list[@]}
+do
+    if [ "$oflag" ]
+    then
+        echo "!!! overwriting !!!" 2>&1 | tee -a ${job_file}
+    fi
     if [ "$dflag" ]
     then
-        echo "running deoblique.sh"
-        source deoblique2.sh
+        echo "*** running s0_deoblique.sh ***" 2>&1 | tee -a ${job_file}
+        source s0_deoblique.sh 2>&1 | tee -a ${job_file}
     fi
     if [ "$sflag" ]
     then
-        echo "running bet.sh"
-        #source bet.sh
+        echo "*** running s0_bet.sh ***" 2>&1 | tee -a ${job_file}
+        source s0_bet.sh 2>&1 | tee -a ${job_file}
     fi
-    if [ "$oflag" ]
-    then
-        echo "!!! overwriting !!!"
-    fi
-
 done
+echo "s0_driver.sh finished" 2>&1 | tee -a ${job_file}
