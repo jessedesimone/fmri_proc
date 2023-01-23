@@ -1,0 +1,92 @@
+# !/bin/bash
+
+
+loc=`pwd`
+data_dir=/media/mcuser/Data1/FAS/RBD_missing/
+#goo_dir=/mnt/Rdrive/LRNLAB/vcourt/UF_PDL_BACKUP/Rasagiline/
+
+cd $data_dir
+#cd $goo_dir
+Subs=`cat id_U01`
+
+for PPL in ${Subs[@]}
+do
+
+mv ${PPL}/test.nii.gz ${PPL}/${PPL}.spgr.nii.gz
+
+#resample to RPI
+input_img=${PPL}/${PPL}.spgr.nii.gz
+output_img=${PPL}/${PPL}.spgr2.nii.gz
+
+
+#Deoblique if axis is tilted
+
+oblique_status=`$HPG 3dinfo -is_oblique $input_img`
+if [ "$oblique_status" -eq "1" ]; then
+    echo "Deobliqueing"
+    3dWarp -deoblique -prefix $output_img $input_img
+    rm $input_img    
+    mv $output_img $input_img	
+else
+    echo "Not Deobliqueing"
+fi
+
+3dresample -orient RPI -prefix $output_img -inset $input_img
+rm $input_img
+3dcopy $output_img $input_img
+rm $output_img
+
+
+
+#/usr/share/fsl/5.0/bin/bet $input_img $output_img -B -f 0.3 -g 0
+bet $input_img $output_img -B -f 0.2 -g 0
+    #rm $input_img    
+    3dcopy $output_img.gz $output_img
+    rm $output_img.gz
+
+
+#deoblique functionals if needed
+input_img=${PPL}/${PPL}.same.nii
+output_img=${PPL}/${PPL}.same1a.nii
+
+
+#Deoblique if axis is tilted
+#3dresample -orient RPI -prefix $output_img -inset $input_img
+#rm $input_img
+#3dcopy $output_img $input_img
+#rm $output_img
+#oblique_status=`$HPG 3dinfo -is_oblique $input_img`
+#if [ "$oblique_status" -eq "1" ]; then
+#    echo "Deobliqueing"
+#    3dWarp -deoblique -prefix $output_img $input_img
+#    rm $input_img    
+#    mv $output_img $input_img	
+#else
+#    echo "Not Deobliqueing"
+#fi
+
+#input_img=${PPL}/${PPL}.samenew.nii
+#output_img=${PPL}/${PPL}.samenewa.nii
+
+
+#Deoblique if axis is tilted
+
+#oblique_status=`$HPG 3dinfo -is_oblique $input_img`
+#if [ "$oblique_status" -eq "1" ]; then
+#    echo "Deobliqueing"
+#    3dWarp -deoblique -prefix $output_img $input_img
+#    rm $input_img    
+#    mv $output_img $input_img	
+#else
+#    echo "Not Deobliqueing"
+#fi
+
+done
+
+#/usr/share/fsl/5.0/bin/bet /mnt/Processing3/DVtest/DATA/PD_RAS_002_1/PD_RAS_002_1.spgr /mnt/Processing3/DVtest/DATA/PD_RAS_002_1/PD_RAS_002_1.spgr_brain -B -f 0.5 -g 0 -c 103 173 185
+
+
+#3dresample -orient RPI -prefix r_PD_RAS_040_1.spgr.nii -inset PD_RAS_040_1.spgr.nii 
+#rm PD_RAS_040_1.spgr.nii 
+#3dcopy r_PD_RAS_040_1.spgr.nii PD_RAS_040_1.spgr.nii 
+
