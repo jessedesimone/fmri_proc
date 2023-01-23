@@ -1,4 +1,4 @@
-# fmri_preproc
+# fmri_proc
 package for preprocessing functional MRI data for activation or connectivity mapping
 
 ## instruction guide
