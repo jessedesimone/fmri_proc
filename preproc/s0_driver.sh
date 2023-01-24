@@ -51,7 +51,7 @@ sub_list=`cat ${proj_dir}/id_lists/test`
 for sub in ${sub_list[@]}; do mkdir -p ${out_dir}/${sub}; done
 for sub in ${sub_list[@]}
 do
-    log_file=${out_dir}/${sub}/log_${dt}_s0.txt
+    log_file=${out_dir}/${sub}/s0_log_${dt}.txt
     touch ${log_file}
     echo "$dt" 2>&1 | tee ${log_file}
 
