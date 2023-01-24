@@ -3,12 +3,12 @@ gen_error_msg="\
     Driver to run modules to prepare for afni_preproc package
     Outfile for [-d] is a dependency for [-s]
 
-    Usage: ./stage0_deoblique.sh [-h] [-d] [-s] [-o]
+    Usage: ./s0_driver.sh [-h] [-d] [-s] [-o]
     Arguments
     -h  help
     -d  deoblique
     -s  skullstrip
-    -o  overwrite 
+    -o  overwrite
     "
     while getopts ":hdso" opt; do
         case ${opt} in
