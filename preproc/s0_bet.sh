@@ -17,7 +17,7 @@ outfile=${out_dir}/${sub}/${sub}.spgr2				#final outfile
 
 echo "infile is ${sub}.spgr.nii"
 
-  if [ ! -f ${outfile}.nii.gz ] || [ $oflag ]; then
+  if [ ! -f ${outfile}.nii ] || [ $oflag ]; then
 		: 'run code if outfile does not exist or
 		if overwrite option is selected in driver'
 
@@ -28,6 +28,8 @@ echo "infile is ${sub}.spgr.nii"
 			: 'if infile exists run brain extraction tool'
 			echo "running brain extraction tool"
 			bet ${infile} ${outfile}.nii -B -f 0.2 -g 0
+      gunzip ${outfile}.nii.gz
+      gunzip ${outfile}_mask.nii.gz
 
 		else
 			echo "!!! ERROR !!! missing infile"
