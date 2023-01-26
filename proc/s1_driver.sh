@@ -1,0 +1,127 @@
+#!/bin/bash
+gen_error_msg="\
+    Driver to run afni_proc.py
+    Note: task BOLD, SUIT, physiol extraction not currently operational; to be added in later iterations
+    afni_proc.py parameters for corresponding options are defined in s1_config_proc.ini
+    
+    Usage: ./s1_driver.sh [-h] [-c] [-t] [-s] [-p] [-o]
+    Arguments
+    -h  help
+    -c  run whole-brain connectivity
+    -t  run whole-brain task BOLD
+    -s  run SUIT
+    -p  run physiol extraction
+    -o  overwrite existing output files
+    "
+    while getopts ":hctpseo" opt; do
+        case ${opt} in
+                h|\?) #help option
+                    echo -e "$gen_error_msg"
+                    exit 1
+                    ;;
+                c) #WB connectivity option
+                    cflag=1
+                    ;;
+                t) #WB task BOLD option
+                    tflag=1
+                    ;;
+                p) #WB with physio extraction option
+                    pflag=1
+                    ;;
+                s) #SUIT option
+                    sflag=1
+                    ;;
+                e) #SUIT with physio extraction option
+                    eflag=1
+                    ;;
+                o) #overwrite
+                    oflag=1
+                    ;;
+                *)  #no option passed
+                    echo "no option passed"
+                    echo -e "$gen_error_msg"
+                    ;;
+        esac
+    done
+    shift $((OPTIND -1))
+
+#--------------------------configuration--------------------------
+#set directories
+: 'call directories.sh'
+source s1_config_directories.sh
+
+#enable extended globbing for pattern matching
+: 'this will help with removing files if overwrite option selected' 
+shopt -s extglob
+
+#set datetime
+: 'used for datetime stamp on job and script files'
+dt=$(date "+%Y.%m.%d.%H.%M.%S")
+
+#check dependencies
+: 'uncomment if you need to check dependencies
+code should run fine on current LRN systems'
+source s1_dependencies.sh
+
+#create job file
+: 'job file executes afni_proc.py script for each subject'
+job_file=${job_dir}/run_proc_py.${dt}
+
+#define subject list
+sub_list=`cat ${proj_dir}/id_lists/test`
+
+for sub in ${sub_list[@]}
+do
+    #configure output files
+    out_file=${out_dir}/${sub}/s1_afni.proc.${dt}.out
+    script_file=${out_dir}/${sub}/s1_afni.proc.${dt}.script
+
+    #configure input files
+    : 'define epi and ant files; exit code if infiles do not exist'
+    epi_file=${data_dir}/${sub}/${sub}.RS1.nii
+    anat_file=${out_dir}/${sub}/${sub}.spgr2.nii
+
+    #--------------------------handle options--------------------------
+    if [[ -f ${epi_file} ]] && [[ -f ${anat_file} ]]; then
+        : 'proceed with data processing if files exist'
+        if [ "$oflag" ]; then
+            echo "!!! overwriting output directory !!!" 
+            : 'remove all files except for spgr/spgr2 and log
+            , which were created during s0 data preprocessing'
+            cd ${out_dir}/${sub}
+            rm !(*spgr*|s0_log_*.txt) 
+            cd ${code_dir}
+        fi
+        if [ "$cflag" ]; then
+            : ' source connectivity afni_proc.py option from config file'
+            source s1_config_proc.ini
+            mid=$connectivity_config_mid
+        fi
+    else
+        echo "!!! ERROR !!! anat and/or epi infiles not found for $sub"
+        echo "terminating script"
+        exit 1
+    fi
+
+#--------------------------afni_proc.py--------------------------
+    : 'initialize afni_proc.py script'
+    afni_proc.py \
+        -subj_id ${sub} \
+        -dsets ${epi_file} \
+        -copy_anat ${anat_file} \
+        -script ${script_file} -scr_overwrite -out_dir ${out_dir}/${sub} \
+        $mid
+
+    echo "tcsh -xef ${script_file} | tee ${out_file}" >> ${job_file}
+    echo "afni_proc.py script created for ${sub}"
+
+done
+
+#--------------------------Run afni_proc.py job file--------------------------
+: 'this will make job file executatble and 
+run script file for each subject'
+chmod +x ${job_file}        #make job file executable
+: 'option to execute job file by uncommenting below'
+#source ${job_file}          #run job file
+
+echo "s1_driver.sh finished" 
