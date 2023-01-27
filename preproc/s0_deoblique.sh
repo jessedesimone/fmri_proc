@@ -40,7 +40,6 @@ if [ ! -f ${outfile} ] || [ $oflag ]; then
 		else
 			echo "infile is in plumb orientation"
 			cp $infile $outfile_d
-
 		fi
 
 		: 'resample anatomical to RPI orientation'
@@ -50,9 +49,9 @@ if [ ! -f ${outfile} ] || [ $oflag ]; then
 		mv ${outfile_r} ${outfile}
 
 	else
-		echo "!!! ERROR !!! missing infile"
-		exit 0
-
+		echo "missing infile"
+		echo "terminating script"
+		exit 1
 	fi
 
 else

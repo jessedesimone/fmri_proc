@@ -8,7 +8,7 @@ gen_error_msg="\
     -h  help
     -d  deoblique
     -s  skullstrip
-    -o  overwrite 
+    -o  overwrite
     "
     while getopts ":hdso" opt; do
         case ${opt} in
@@ -48,6 +48,10 @@ source s0_dependencies.sh
 
 #define subject list
 sub_list=`cat ${proj_dir}/id_lists/test`
+
+#define input file naming
+anat="T1"
+epi="RS1"
 
 for sub in ${sub_list[@]}; do mkdir -p ${out_dir}/${sub}; done
 for sub in ${sub_list[@]}
