@@ -7,6 +7,7 @@ gen_error_msg="\
     Dependencies:
     Run preproc pipeline (deoblique, resample, skullstrip)
     Configure data directories in s1_config_directories.sh
+    Configure afni_proc.py options in s1_config_proc.ini
     Update subj id list in configuration section of this script
     Update file naming for epi and anat infiles in configuration section of this script
 
