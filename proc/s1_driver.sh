@@ -8,7 +8,7 @@ gen_error_msg="\
     Run preproc pipeline (deoblique, resample, skullstrip)
     Configure data directories in s1_config_directories.sh
     Update subj id list in configuration section of this script
-    Update file naming for epi and anat infiles
+    Update file naming for epi and anat infiles in configuration section of this script
 
     Usage: ./s1_driver.sh [-h] [-c] [-t] [-s] [-p] [-o]
     Arguments
@@ -75,7 +75,7 @@ source s1_dependencies.sh
 job_file=${job_dir}/run_proc_py.${dt}
 
 #define subject list
-sub_list=`cat ${proj_dir}/id_lists/id_sub_quest_mci_only1`
+sub_list=`cat ${proj_dir}/id_lists/id_sub_quest_mci_only`
 
 #define file naming
 anat="T1_2"             #deobliqued, resampled, skull stripped anatomical image

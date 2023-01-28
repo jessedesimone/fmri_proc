@@ -1,9 +1,17 @@
 #!/bin/bash
 gen_error_msg="\
-    Driver to run modules to prepare for afni_preproc package
-    Outfile for [-d] is a dependency for [-s]
+    Driver to run preprocessing modules and prepare for afni_proc.py processing
+
+    Dependencies:
+    Configure data directories in s0_config_directories.sh
+    Update subj id list in configuration section of this script
+    Update file naming for epi and anat infiles in configuration section of this script
+
+    Note: deoblique anatomical outfile for [-d] is a dependency for skullstrip [-s]
+    If running skullstrip only, -d must have been performed previously
 
     Usage: ./stage0_deoblique.sh [-h] [-d] [-s] [-o]
+    Note: Outfile for [-d] is a dependency for [-s]
     Arguments
     -h  help
     -d  deoblique

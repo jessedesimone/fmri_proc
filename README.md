@@ -1,11 +1,13 @@
 # fmri_proc
-package for (pre)processing functional MRI data for activation or connectivity mapping
+functional MRI (pre)processing package for task or resting state analysis
 
-## instruction guide
+## preproc
+preprocessing pipeline
+performs deoblique and orientation resampling on fmri and anatomical images
+performs skillstrip (brain extraction) on anatomical image
+./preproc/s0_driver -h for help
 
-### step 1 deoblique.sh
-module to convert anatomical T1 image from oblique to plumb
-resamples plumb anatomic imaging to radiological view (RPI)
-
-### step 2 bet.sh
-module for brain extraction (skull stripping) using fslbet function
+## proc
+processing pipeline
+performs afni_proc.py processing using preproc output files as inputs
+./preproc/s1_driver -h for help
