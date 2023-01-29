@@ -14,4 +14,4 @@ fMRI preprocessing package to prepare data for afni_proc.py processing <br/>
 
 ## proc
 fMRI processing pipeline using afni_proc.py; prepare data for post-processing <br/>
-./preproc/s1_driver -h for help
+./proc/s1_driver -h for help
