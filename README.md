@@ -1,17 +1,17 @@
 # fmri_proc
 functional MRI (pre)processing package for task or resting state analysis
 
+Change Log
+==========
+0.0.1
+------------------
+Last update: <br/>
+230128 <br/>
+
 ## preproc
-preprocessing pipeline
-performs deoblique and orientation resampling on fmri and anatomical images
-
-performs skillstrip (brain extraction) on anatomical image
-
+fMRI preprocessing package to prepare data for afni_proc.py processing <br/>
 ./preproc/s0_driver -h for help
 
 ## proc
-processing pipeline
-
-performs afni_proc.py processing using preproc output files as inputs
-
+fMRI processing pipeline using afni_proc.py; prepare data for post-processing <br/>
 ./preproc/s1_driver -h for help
