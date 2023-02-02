@@ -26,6 +26,7 @@ echo "infile is ${sub}.${anat}.nii"
 			: 'if infile exists run brain extraction tool'
 			echo "running brain extraction tool"
 			bet ${infile} ${outfile}.nii -B -f 0.2 -g 0
+      #bet ${infile} ${outfile}.nii -B -f 0.2 -g 1
 			gunzip ${outfile}.nii.gz
 			gunzip ${outfile}_mask.nii.gz
 
