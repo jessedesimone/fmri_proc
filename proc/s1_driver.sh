@@ -96,7 +96,7 @@ do
     #============================handle options============================
     if [ "$oflag" ]; then
         echo "!!! overwriting output directory !!!"
-        : 'remove all files except for spgr/spgr2 and preproc log'
+        : 'remove all files except infiles and preproc log'
         rm -rf ${data_dir}/${sub}/s1_afni.proc.*
         cd ${data_dir}/${sub}
         if [ -d $out_dir ]; then
