@@ -11,7 +11,7 @@ gen_error_msg="\
     Update subj id list in configuration section of this script
     Update file naming for epi and anat infiles in configuration section of this script
 
-    Usage: ./s1_driver.sh [-h] [-c] [-t] [-s] [-p] [-o]
+    Usage: ./s1_driver.sh [-h] [-c] [-t] [-s] [-e] [-p] [-o]
     Arguments
     -h  help
     -c  run whole-brain connectivity
