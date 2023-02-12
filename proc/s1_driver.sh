@@ -55,7 +55,7 @@ gen_error_msg="\
 #============================configuration============================
 : 'user input may be required here'
 #set directories
-: 'call directories.sh'
+: 'call s1_config_directories.sh'
 source s1_config_directories.sh
 
 #enable extended globbing
