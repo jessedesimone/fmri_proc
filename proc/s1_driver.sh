@@ -44,12 +44,13 @@ gen_error_msg="\
                 o) #overwrite
                     oflag=1
                     ;;
-                *)  #no option passed
-                    echo "no option passed"
-                    echo -e "$gen_error_msg"
-                    ;;
         esac
     done
+    if [ $OPTIND -eq 1 ]; then 
+        echo "++ driver.sh requires argument"
+        echo "$gen_error_msg"
+        exit 1
+        fi
     shift $((OPTIND -1))
 
 #============================configuration============================
