@@ -1,12 +1,5 @@
 # fmri_proc
-functional MRI (pre)processing package for task or resting state analysis
-
-Change Log
-==========
-0.0.1
-------------------
-Last update: <br/>
-230128 <br/>
+pre)processing package for task or resting state functional MRI data
 
 ## preproc
 fMRI preprocessing package to prepare data for afni_proc.py processing <br/>
