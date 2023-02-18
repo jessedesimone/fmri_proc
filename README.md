@@ -1,5 +1,5 @@
 # fmri_proc
-pre)processing package for task or resting state functional MRI data
+(pre)processing package for task or resting state functional MRI data
 
 ## preproc
 fMRI preprocessing package to prepare data for afni_proc.py processing <br/>
