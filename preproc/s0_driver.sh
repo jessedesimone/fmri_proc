@@ -1,4 +1,7 @@
 #!/bin/bash
+
+head -8 ../CHANGELOG.md
+
 gen_error_msg="\
     Driver to run preprocessing modules and prepare for afni_proc.py processing
 

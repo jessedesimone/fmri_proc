@@ -1,4 +1,7 @@
 #!/bin/bash
+
+head -8 ../CHANGELOG.md
+
 gen_error_msg="\
     Driver to run afni_proc.py
     Note: task BOLD, SUIT, physiol extraction not currently operational; to be added in later iterations
@@ -12,7 +15,7 @@ gen_error_msg="\
     Update file naming for epi and anat infiles in configuration section of this script
 
     Usage: ./s1_driver.sh [-h] [-c] [-t] [-s] [-e] [-p] [-o]
-    Arguments
+    Arguments (must select 1 of):
     -h  help
     -c  run whole-brain connectivity
     -t  run whole-brain task BOLD
@@ -47,7 +50,7 @@ gen_error_msg="\
         esac
     done
     if [ $OPTIND -eq 1 ]; then 
-        echo "++ driver.sh requires argument"
+        echo "++ driver.sh requires 1 argument"
         echo "$gen_error_msg"
         exit 1
         fi
@@ -112,6 +115,10 @@ do
             : ' source connectivity afni_proc.py option from config file'
             source s1_config_proc.ini
             mid=$connectivity_config_mid
+        elif [ "$cflag" ]; then
+            : 'source wb task bold afni_proc.py option from config file'
+            source s1_config_proc.ini
+            mid=$bold_config_mid
         fi
     else
         : 'terminate script if missing input files'

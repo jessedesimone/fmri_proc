@@ -8,6 +8,7 @@ Author: J DeSimone
 url="https://github.com/jessedesimone/fmriconnmap"
 
 ## [0.0.2] - 2023-02-17
+- added wb task bold configuration option
 - passing
 
 ## [0.0.1] - 2023-01-06
