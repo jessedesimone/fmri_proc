@@ -4,7 +4,7 @@ head -8 ../CHANGELOG.md
 
 gen_error_msg="\
     Driver to run afni_proc.py
-    Note: task BOLD, SUIT, physiol extraction not currently operational; to be added in later iterations
+    Note: SUIT & physiol extraction not currently operational; to be added in later iterations
     afni_proc.py parameters for each option are defined in s1_config_proc.ini
 
     Dependencies:
