@@ -1,7 +1,7 @@
 fmri_proc package
 ==========
 Version: 0.0.2
-Status: passing
+Status: build::passing
 Date: Feb 2023
 
 Author: J DeSimone
