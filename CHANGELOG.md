@@ -5,7 +5,7 @@ Status: build::passing
 Date: Feb 2023
 
 Author: J DeSimone
-url="https://github.com/jessedesimone/fmriconnmap"
+url="https://github.com/jessedesimone/fmri_proc"
 
 ## [0.0.2] - 2023-02-17
 - added wb task bold configuration option

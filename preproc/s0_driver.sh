@@ -7,11 +7,10 @@ gen_error_msg="\
 
     Dependencies:
     Configure data directories in s0_config_directories.sh
-    Update subj id list in configuration section of this script
+    Update id_subj list in configuration section of this script
     Update file naming for epi and anat infiles in configuration section of this script
 
-    Note: deobliqued anatomical outfile [-d] is a dependency for skullstrip [-s]
-    If running -s only, -d must have been performed previously
+    Note: deoblique [-d] option is a dependency for skullstrip [-s] option
 
     Usage: ./stage0_deoblique.sh [-h] [-d] [-s] [-o]
     Arguments
