@@ -17,7 +17,4 @@ url="https://github.com/jessedesimone/fmri_proc"
 ### [0.0.2] - 2023-10-08
 - conformance to BIDS structure
 - config directory for subject lists
-- deoblique check for during brain extraction tool
-
-### todo
-- overwrite option for preproc
+- perform data checks before skull strip
