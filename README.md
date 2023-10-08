@@ -8,3 +8,5 @@ fMRI preprocessing package to prepare data for afni_proc.py processing with deob
 ## proc
 fMRI processing pipeline to generate an afni_proc.py tcsh script for an AFNI process stream and prepare data for analysis <br/>
 ./proc/s1_driver -h for help
+
+### [Change Log](./CHANGELOG.md)
