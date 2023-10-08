@@ -14,6 +14,7 @@ echo "*** SUBJECT: $sub ***"
 TAG=( $anat $epi )
 for tag in ${TAG[@]}
 do
+
 	infile=${data_dir}/${sub}/${sub}.${tag}.nii				    #raw infile
 	outfile_d=${out_dir}/${sub}/${sub}.${tag}_d.nii				#deoblique outfile
 	outfile_r=${out_dir}/${sub}/${sub}.${tag}_r.nii				#resample outfile
@@ -46,6 +47,8 @@ do
 			: 'resample infile to RPI orientation'
 			echo "resamping input to RPI orientation"
 			3dresample -orient RPI -prefix ${outfile_r} -inset ${outfile_d}
+
+			: 'remove unnecessary files'
 			rm ${outfile_d}
 			mv ${outfile_r} ${outfile}
 
@@ -56,9 +59,7 @@ do
 		fi
 
 	else
-		: 'if outfile already exists and overwrite
-		option not selected, do not run code'
-		echo "outfile already exists"
+		echo "outfile already exists; use -o option to overwrite"
 	fi
 
 done

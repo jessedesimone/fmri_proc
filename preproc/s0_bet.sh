@@ -23,6 +23,29 @@ echo "infile is ${sub}.${anat}.nii"
 		if [ -e ${infile} ]; then
 			echo "infile exists"
 
+			: 'run a series of checks on the infile'
+
+			: 'if infile is oblique then terminate'
+			oblique_status=`3dinfo -is_oblique ${infile}`
+			if [ $oblique_status -eq 1 ]; then
+				echo "infile is oblique"
+				echo "++ please run ./s0_driver.sh -ds "
+				echo "terminating script"
+				exit 1
+			else
+				echo "infile is plumb"
+			fi
+
+			: 'if infile not RPI orientation then terminate'
+			target_status = RPI
+			orient_status = `3dinfo -orient ${infile}`
+			if [ $orient_status != $target_status ]; then
+				echo "infile is not in RPI orientation"
+				echo "++ please run ./s0_driver.sh -ds "
+				echo "terminating script"
+				exit 1
+			fi
+
 			: 'if infile exists run brain extraction tool'
 			echo "running brain extraction tool"
 			bet ${infile} ${outfile}.nii -B -f 0.2 -g 0

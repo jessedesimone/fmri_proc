@@ -80,7 +80,7 @@ source s1_dependencies.sh
 job_file=${job_dir}/run_proc_py.${dt}
 
 #define subject list
-sub_list=`cat ${proj_dir}/id_lists/id_sub_quest_mci_only`
+sub_list=`cat ${list_dir}/id_subj.txt`
 
 #define file naming
 anat="T1_2"             #deobliqued, resampled, skull stripped anatomical image

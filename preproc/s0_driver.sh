@@ -57,11 +57,11 @@ code should run fine on current LRN systems'
 source s0_dependencies.sh
 
 #define subject list
-sub_list=`cat ${proj_dir}/id_lists/test`
+sub_list=`cat ${list_dir}/tests/id_subj.txt`
 
 #define file naming
-anat="T1"
-epi="RS1"
+anat="t1w"
+epi="task_rest_bold"
 
 for sub in ${sub_list[@]}; do mkdir -p ${out_dir}/${sub}; done
 for sub in ${sub_list[@]}
@@ -73,15 +73,19 @@ do
     #============================handle options============================
     if [ "$oflag" ]
     then
+        : 'if -o option given then remove files from output directory for each subject'
         echo "!!! overwriting !!!" 2>&1 | tee -a ${log_file}
+        #todo add overwrite feature 
     fi
     if [ "$dflag" ]
     then
+        : 'if -d option given then run deoblique and resample for each subject'
         echo "*** running s0_deoblique.sh ***" 2>&1 | tee -a ${log_file}
         source s0_deoblique.sh 2>&1 | tee -a ${log_file}
     fi
     if [ "$sflag" ]
     then
+        : 'if -s option given then run skull strip/BET for each subject'
         echo "*** running s0_bet.sh ***" 2>&1 | tee -a ${log_file}
         source s0_bet.sh 2>&1 | tee -a ${log_file}
     fi
