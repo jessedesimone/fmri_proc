@@ -50,8 +50,8 @@ echo "++ infile is ${sub}.${anat}.nii"
 
 			: 'if infile exists run brain extraction tool'
 			echo "++ running brain extraction tool"
-			#/usr/local/fsl/bin/bet ${infile} ${outfile}.nii -B -f 0.2 -g 0		#use fsl bet
-			3dSkullStrip -input ${infile} -prefix ${outfile}.nii		#use afni 3dSkullStrip
+			bet ${infile} ${outfile}.nii -B -f 0.2 -g 0		#use fsl bet
+			#3dSkullStrip -input ${infile} -prefix ${outfile}.nii		#use afni 3dSkullStrip
 			gunzip ${outfile}.nii.gz
 			gunzip ${outfile}_mask.nii.gz
 
