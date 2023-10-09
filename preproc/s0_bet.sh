@@ -19,6 +19,11 @@ echo "++ infile is ${sub}.${anat}.nii"
 		: 'run code if outfile does not exist or
 		if overwrite option is selected in driver'
 
+		: 'if oflag given then remove existing output files'
+		if [ $oflag ]; then
+			rm -rf ${outfile}.*
+		fi
+
 		: 'check that infile exists'
 		if [ -e ${infile} ]; then
 			echo "++ infile exists"
@@ -50,7 +55,7 @@ echo "++ infile is ${sub}.${anat}.nii"
 
 			: 'if infile exists run brain extraction tool'
 			echo "++ running brain extraction tool"
-			bet ${infile} ${outfile}.nii -B -f 0.2 -g 0		#use fsl bet
+			bet ${infile} ${outfile} -B -f 0.2 -g 0		#use fsl bet
 			#3dSkullStrip -input ${infile} -prefix ${outfile}.nii		#use afni 3dSkullStrip
 			gunzip ${outfile}.nii.gz
 			gunzip ${outfile}_mask.nii.gz
@@ -63,7 +68,8 @@ echo "++ infile is ${sub}.${anat}.nii"
 	else
 		: 'if outfile already exists and overwrite
 		option not selected, do not run code'
-		echo "++ outfile already exists"
+		echo "++ outfile ${outfile}.nii already exists"
+		echo "++ use overwrite option [-o] to overwrite"
 	fi
 
 echo "++ s0_bet.sh finished"
