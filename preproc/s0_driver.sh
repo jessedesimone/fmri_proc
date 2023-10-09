@@ -14,10 +14,10 @@ gen_error_msg="\
 
     Usage: ./stage0_deoblique.sh [-h] [-d] [-s] [-o]
     Arguments
-    -h  help
-    -d  deoblique
-    -s  skullstrip
-    -o  overwrite
+        -h  help
+        -d  deoblique
+        -s  skullstrip
+        -o  overwrite
     "
     while getopts ":hdso" opt; do
         case ${opt} in
@@ -68,23 +68,24 @@ for sub in ${sub_list[@]}
 do
     log_file=${out_dir}/${sub}/s0_log_${dt}.txt
     touch ${log_file}
-    echo "$dt" 2>&1 | tee ${log_file}
+    echo "++ $dt" 2>&1 | tee ${log_file}
 
     #============================handle options============================
-    if [ "$oflag" ]
-    then
+    if [ "$oflag" ]; then
         : 'if -o option given then remove files from output directory for each subject'
-        echo "!!! overwriting !!!" 2>&1 | tee -a ${log_file}
-        #todo add overwrite feature 
-    fi
-    if [ "$dflag" ]
-    then
+        echo "++ overwrite option selected" 2>&1 | tee -a ${log_file}
+        if [ ! "$dflag" ] || [ ! "$sflag" ]; then
+            : 'terminate if -d or -s flags not selected'
+            echo "-d or -s option must be passed for overwriting"
+            exit 1
+        fi
+    fi 
+    if [ "$dflag" ]; then
         : 'if -d option given then run deoblique and resample for each subject'
         echo "*** running s0_deoblique.sh ***" 2>&1 | tee -a ${log_file}
         source s0_deoblique.sh 2>&1 | tee -a ${log_file}
     fi
-    if [ "$sflag" ]
-    then
+    if [ "$sflag" ]; then
         : 'if -s option given then run skull strip/BET for each subject'
         echo "*** running s0_bet.sh ***" 2>&1 | tee -a ${log_file}
         source s0_bet.sh 2>&1 | tee -a ${log_file}
