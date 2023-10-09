@@ -49,8 +49,8 @@ do
 				cp $infile $outfile_d
 			fi
 
-			: 'resample infile to RPI orientation'
-			echo "++ resamping input to RPI orientation"
+			: 'resample to RPI orientation'
+			echo "++ resamping to RPI orientation"
 			3dresample -orient RPI -prefix ${outfile_r} -inset ${outfile_d}
 
 			: 'remove unnecessary files'

@@ -75,9 +75,9 @@ do
         : 'if -o option given then remove files from output directory for each subject'
         echo "++ overwrite option selected" 2>&1 | tee -a ${log_file}
         if [ "$oflag" ] && [ ! "$dflag" ]; then
-            echo "++ -d option must be passed for overwriting" 
+            echo "++ -d option not provided" 
             if [ ! "$sflag" ]; then
-                echo "++ -s option must be passed for overwriting"
+                echo "++ -s option not provided"
             fi
         fi
     fi 
