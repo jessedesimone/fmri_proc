@@ -37,8 +37,8 @@ echo "infile is ${sub}.${anat}.nii"
 			fi
 
 			: 'if infile not RPI orientation then terminate'
-			target_status = RPI
-			orient_status = `3dinfo -orient ${infile}`
+			target_status="RPI"
+			orient_status=`3dinfo -orient ${infile}`
 			if [ $orient_status != $target_status ]; then
 				echo "infile is not in RPI orientation"
 				echo "++ please run ./s0_driver.sh -ds "

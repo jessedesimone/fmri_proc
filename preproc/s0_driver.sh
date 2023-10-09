@@ -74,21 +74,22 @@ do
     if [ "$oflag" ]; then
         : 'if -o option given then remove files from output directory for each subject'
         echo "++ overwrite option selected" 2>&1 | tee -a ${log_file}
-        if [ ! "$dflag" ] || [ ! "$sflag" ]; then
-            : 'terminate if -d or -s flags not selected'
-            echo "-d or -s option must be passed for overwriting"
-            exit 1
+        if [ "$oflag" ] && [ ! "$dflag" ]; then
+            echo "++ -d option must be passed for overwriting" 
+            if [ ! "$sflag" ]; then
+                echo "++ -s option must be passed for overwriting"
+            fi
         fi
     fi 
     if [ "$dflag" ]; then
         : 'if -d option given then run deoblique and resample for each subject'
-        echo "*** running s0_deoblique.sh ***" 2>&1 | tee -a ${log_file}
+        echo "++ running s0_deoblique.sh" 2>&1 | tee -a ${log_file}
         source s0_deoblique.sh 2>&1 | tee -a ${log_file}
     fi
     if [ "$sflag" ]; then
         : 'if -s option given then run skull strip/BET for each subject'
-        echo "*** running s0_bet.sh ***" 2>&1 | tee -a ${log_file}
+        echo "++ running s0_bet.sh" 2>&1 | tee -a ${log_file}
         source s0_bet.sh 2>&1 | tee -a ${log_file}
     fi
 done
-echo "s0_driver.sh finished" 2>&1 | tee -a ${log_file}
+echo "++ s0_driver.sh finished" 2>&1 | tee -a ${log_file}
